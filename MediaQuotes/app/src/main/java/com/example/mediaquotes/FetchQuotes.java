@@ -25,7 +25,7 @@ public class FetchQuotes extends AsyncTask<String, Void, String> {
 
     protected String getQuoteInfo() throws IOException {
         //Google Books API URL
-        String apiURL = "https://quotable.io/quotes?page=1";
+        String apiURL = "https://game-of-thrones-quotes.herokuapp.com/v1/random/5";
 
         //Make connection to API
         URL requestURL = new URL(apiURL);
@@ -70,19 +70,16 @@ public class FetchQuotes extends AsyncTask<String, Void, String> {
         //updates the TextViews
         super.onPostExecute(s);
         String quotes = "";
-        JSONObject jsonObject = null;
         JSONArray itemsArray = null;
         try {
             //convert jsonString to jsonObject
-            jsonObject = new JSONObject(s);
-            //get json array
-            itemsArray = jsonObject.getJSONArray("results");
+            itemsArray = new JSONArray(s);
             //loop through array until you find an author and title
             for (int i=0;i < itemsArray.length(); i++) {
                 // Get a json object from array
                 JSONObject quoteObj = itemsArray.getJSONObject(i);
                 //get volumeInfo key
-                String quote = quoteObj.getString("content");
+                String quote = quoteObj.getString("sentence");
 
                 //volumeInfo object has title and author string
                 quotes += quote+"\n";
