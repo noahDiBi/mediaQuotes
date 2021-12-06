@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">MediaQuotes</string>
+    <string name="input">Please input a word/phrase you want to look for:</string>
 </resources>
