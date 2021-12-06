@@ -3,17 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-<<<<<<< HEAD
         <entry key="..\:/Users/noahd/AndroidStudioProjects/MediaQuotes/app/src/main/res/layout/activity_input.xml" value="0.16168478260869565" />
-        <entry key="..\:/Users/noahd/AndroidStudioProjects/MediaQuotes/app/src/main/res/layout/activity_main.xml" value="0.16168478260869565" />
+        <entry key="..\:/Users/noahd/AndroidStudioProjects/MediaQuotes/app/src/main/res/layout/activity_main.xml" value="0.2" />
         <entry key="..\:/Users/noahd/AndroidStudioProjects/MediaQuotes/app/src/main/res/layout/activity_output.xml" value="0.13020833333333334" />
         <entry key="..\:/Users/noahd/AndroidStudioProjects/MediaQuotes/app/src/main/res/layout/quote_item.xml" value="0.13020833333333334" />
-=======
-        <entry key="app/src/main/res/layout/activity_input.xml" value="0.140625" />
-        <entry key="app/src/main/res/layout/activity_main.xml" value="0.19899387759796172" />
-        <entry key="app/src/main/res/layout/activity_output.xml" value="0.11170212765957446" />
-        <entry key="app/src/main/res/layout/quote_item.xml" value="0.10869565217391304" />
->>>>>>> bc4efac37189abd45880192a0307620a8b939780
       </map>
     </option>
   </component>

@@ -1,5 +1,7 @@
 package com.example.mediaquotes;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.TextView;
@@ -15,12 +17,13 @@ import java.io.InputStreamReader;
 import java.lang.ref.WeakReference;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.LinkedList;
 
 public class FetchQuotes extends AsyncTask<String, Void, String> {
-    private WeakReference<TextView> mQuotesText;
+    private WeakReference<LinkedList<String>> mQuotesText;
 
-    FetchQuotes(TextView quotesText) {
-        this.mQuotesText = new WeakReference<>(quotesText);
+    FetchQuotes(LinkedList<String> quotesText) {
+        mQuotesText = new WeakReference<LinkedList<String>>(quotesText);
     }
 
     protected String getQuoteInfo() throws IOException {
@@ -37,7 +40,7 @@ public class FetchQuotes extends AsyncTask<String, Void, String> {
         InputStream inputStream = urlConnection.getInputStream();
         BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
 
-        //Create a String with the reponse
+        //Create a String with the response
         StringBuilder builder = new StringBuilder();
         String line;
         while ((line = reader.readLine()) != null) {
@@ -55,11 +58,14 @@ public class FetchQuotes extends AsyncTask<String, Void, String> {
         String jsonString = null;
         //method that connects to API throws an exception
         //must use try catch block to call it
+        Log.d("FetchQuotes", "Attempt Read");
         try {
             jsonString = getQuoteInfo();
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        Log.d("FetchQuotes", jsonString);
 
         return jsonString;
     }
@@ -75,22 +81,20 @@ public class FetchQuotes extends AsyncTask<String, Void, String> {
             //convert jsonString to jsonObject
             itemsArray = new JSONArray(s);
             //loop through array until you find an author and title
+            Log.d("FetchQuotes", "Entering Loop");
             for (int i=0;i < itemsArray.length(); i++) {
                 // Get a json object from array
                 JSONObject quoteObj = itemsArray.getJSONObject(i);
                 //get volumeInfo key
                 String quote = quoteObj.getString("sentence");
-
-                //volumeInfo object has title and author string
-                quotes += quote+"\n";
-                Log.d("FetchQuote","quote is "+quote);
-                Log.d("FetchQuote", "quotes is "+quotes);
-
+                mQuotesText.get().add(quote);
+                Log.d("FetchQuotes", quote);
             }
-            mQuotesText.get().setText(quotes);
+
         } catch (Exception e) {
-            mQuotesText.get().setText("No results");
+            mQuotesText.get().add("No results");
             e.printStackTrace();
         }
+
     }
 }

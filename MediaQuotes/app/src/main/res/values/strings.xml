@@ -1,4 +1,15 @@
 <resources>
     <string name="app_name">MediaQuotes</string>
     <string name="input">Please input a word/phrase you want to look for:</string>
+    <string name="dune">Dune</string>
+    <string name="media">Please select the books/series you want to search:</string>
+    <string name="breaking_bad">Breaking Bad</string>
+    <string name="game_of_thrones">Game of Thrones</string>
+    <string name="better_call_saul">Better Call Saul</string>
+    <string name="lucifer">Lucifer</string>
+    <string name="inputWord">Input</string>
+    <string name="word_phrase">Please input a word/phrase you want to look for:</string>
+    <string name="search_button">Search</string>
+    <string name="instruction1">Please select the books/series you want to search:</string>
+    <string name="instruction2">Please input a word/phrase you want to look for:</string>
 </resources>

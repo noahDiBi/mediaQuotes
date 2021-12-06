@@ -5,7 +5,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.util.Log;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 public class OutputActivity extends AppCompatActivity {
@@ -23,8 +25,15 @@ public class OutputActivity extends AppCompatActivity {
         //Thanks stackOverflow
         Bundle extras = getIntent().getExtras();
         if(extras != null){
-            mQuoteList = (LinkedList<String>) extras.get("key");
+            ArrayList<String> list = (ArrayList<String>) extras.get("key");
+            for(int i = 0; i < list.size(); i++) {
+                mQuoteList.add(list.get(i));
+                Log.d("Output", list.get(i));
+            }
         }
+        else
+            Log.d("OutputActivity", "null");
+
 
         //Create the data for the recyclerView
         //instantiate recyclerView
