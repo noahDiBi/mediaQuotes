@@ -34,7 +34,6 @@ public class OutputActivity extends AppCompatActivity {
         else
             Log.d("OutputActivity", "null");
 
-
         //Create the data for the recyclerView
         //instantiate recyclerView
         mRecyclerView = findViewById(R.id.quoteList);

@@ -9,75 +9,86 @@
     tools:context=".MainActivity">
 
 
-    <TextView
-        android:id="@+id/instruction1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="56dp"
-        android:text="@string/instruction1"
-        android:textSize="16sp"
-        android:textStyle="bold" />
-
-    <RadioButton
-        android:id="@+id/dune"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="@string/dune" />
-
-    <RadioButton
-        android:id="@+id/breakingbad"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="@string/breaking_bad" />
-
-    <RadioButton
-        android:id="@+id/got"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="@string/game_of_thrones" />
-
-    <RadioButton
-        android:id="@+id/bettercallsaul"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="@string/better_call_saul" />
-
-    <RadioButton
-        android:id="@+id/lucifer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="@string/lucifer" />
-
-    <TextView
-        android:id="@+id/instruction2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="@string/instruction2"
-        android:textSize="16sp"
-        android:textStyle="bold" />
-
-    <EditText
-        android:id="@+id/editTextTextPersonName"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="@string/inputField"
-        android:inputType="textPersonName"
-        android:minHeight="48dp"
-        android:textColorHint="#000000" />
+        android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/search_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="processInput"
-        android:text="@string/search_button" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/instruction1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="56dp"
+                android:text="@string/instruction1"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <RadioButton
+                android:id="@+id/dune"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/dune" />
+
+            <RadioButton
+                android:id="@+id/breakingbad"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/breaking_bad" />
+
+            <RadioButton
+                android:id="@+id/got"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/game_of_thrones" />
+
+            <RadioButton
+                android:id="@+id/bettercallsaul"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/better_call_saul" />
+
+            <RadioButton
+                android:id="@+id/lucifer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/lucifer" />
+
+            <TextView
+                android:id="@+id/instruction2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:text="@string/instruction2"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/editTextTextPersonName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/inputField"
+                android:inputType="textPersonName"
+                android:minHeight="48dp"
+                android:textColorHint="#000000" />
+
+            <Button
+                android:id="@+id/search_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="processInput"
+                android:text="@string/search_button" />
+        </LinearLayout>
+    </ScrollView>
 
 
 </LinearLayout>

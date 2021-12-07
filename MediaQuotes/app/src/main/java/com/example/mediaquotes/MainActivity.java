@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.LinkedList;
+import java.util.concurrent.ExecutionException;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private LinkedList<String> mQuotesText;
@@ -56,10 +57,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    public void processInput(View view){
+    public void processInput(View view) throws InterruptedException, ExecutionException {
         Intent intent = new Intent(this, OutputActivity.class);
         FetchQuotes fetch = new FetchQuotes(mQuotesText);
-        fetch.execute();
+        fetch.execute().get();
         intent.putExtra("key", mQuotesText);
         startActivity(intent);
     }

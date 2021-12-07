@@ -26,6 +26,10 @@ public class FetchQuotes extends AsyncTask<String, Void, String> {
         mQuotesText = new WeakReference<LinkedList<String>>(quotesText);
     }
 
+    public LinkedList<String> getContents(){
+        return mQuotesText.get();
+    }
+
     protected String getQuoteInfo() throws IOException {
         //Google Books API URL
         String apiURL = "https://game-of-thrones-quotes.herokuapp.com/v1/random/5";
@@ -67,15 +71,8 @@ public class FetchQuotes extends AsyncTask<String, Void, String> {
 
         Log.d("FetchQuotes", jsonString);
 
-        return jsonString;
-    }
+        String s = jsonString;
 
-    @Override
-    protected void onPostExecute(String s) {
-        //this method updates the UI
-        //updates the TextViews
-        super.onPostExecute(s);
-        String quotes = "";
         JSONArray itemsArray = null;
         try {
             //convert jsonString to jsonObject
@@ -85,7 +82,7 @@ public class FetchQuotes extends AsyncTask<String, Void, String> {
             for (int i=0;i < itemsArray.length(); i++) {
                 // Get a json object from array
                 JSONObject quoteObj = itemsArray.getJSONObject(i);
-                //get volumeInfo key
+                //get quoteInfo key
                 String quote = quoteObj.getString("sentence");
                 mQuotesText.get().add(quote);
                 Log.d("FetchQuotes", quote);
@@ -95,6 +92,15 @@ public class FetchQuotes extends AsyncTask<String, Void, String> {
             mQuotesText.get().add("No results");
             e.printStackTrace();
         }
+
+        return jsonString;
+
+    }
+
+    @Override
+    protected void onPostExecute(String s) {
+
+        super.onPostExecute(s);
 
     }
 }
