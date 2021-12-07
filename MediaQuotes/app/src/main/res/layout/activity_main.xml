@@ -23,7 +23,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:onClick="onClickedDune"
         android:text="@string/dune" />
 
     <RadioButton
@@ -31,7 +30,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:onClick="onClickedBB"
         android:text="@string/breaking_bad" />
 
     <RadioButton
@@ -39,7 +37,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:onClick="onClickedGOT"
         android:text="@string/game_of_thrones" />
 
     <RadioButton
@@ -47,7 +44,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:onClick="onClickedBCS"
         android:text="@string/better_call_saul" />
 
     <RadioButton
@@ -55,7 +51,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:onClick="onClickedLucifer"
         android:text="@string/lucifer" />
 
     <TextView
@@ -72,7 +67,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="Please enter your input here."
+        android:hint="@string/inputField"
         android:inputType="textPersonName"
         android:minHeight="48dp"
         android:textColorHint="#000000" />
@@ -83,12 +78,6 @@
         android:layout_height="wrap_content"
         android:onClick="processInput"
         android:text="@string/search_button" />
-
-    <TextView
-        android:id="@+id/count_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/textview" />
 
 
 </LinearLayout>

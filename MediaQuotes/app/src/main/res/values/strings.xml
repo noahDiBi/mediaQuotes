@@ -13,4 +13,5 @@
     <string name="instruction1">Please select the books/series you want to search:</string>
     <string name="instruction2">Please input a word/phrase you want to look for:</string>
     <string name="textview">TextView</string>
+    <string name="inputField">Please enter your input here.</string>
 </resources>
