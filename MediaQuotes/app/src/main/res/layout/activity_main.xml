@@ -48,20 +48,6 @@
                 android:layout_marginTop="8dp"
                 android:text="@string/game_of_thrones" />
 
-            <RadioButton
-                android:id="@+id/bettercallsaul"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="@string/better_call_saul" />
-
-            <RadioButton
-                android:id="@+id/lucifer"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="@string/lucifer" />
-
             <TextView
                 android:id="@+id/instruction2"
                 android:layout_width="wrap_content"

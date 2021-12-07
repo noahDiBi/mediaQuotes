@@ -17,22 +17,37 @@ import java.io.InputStreamReader;
 import java.lang.ref.WeakReference;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 public class FetchQuotes extends AsyncTask<String, Void, String> {
     private WeakReference<LinkedList<String>> mQuotesText;
+    private boolean[] mWorksUsed;
 
-    FetchQuotes(LinkedList<String> quotesText) {
+    FetchQuotes(LinkedList<String> quotesText, boolean[] works) {
         mQuotesText = new WeakReference<LinkedList<String>>(quotesText);
+        mWorksUsed = works;
     }
 
     public LinkedList<String> getContents(){
         return mQuotesText.get();
     }
 
-    protected String getQuoteInfo() throws IOException {
+    protected String getQuoteInfo(int work) throws IOException {
         //Google Books API URL
-        String apiURL = "https://game-of-thrones-quotes.herokuapp.com/v1/random/5";
+        String apiURL = new String();
+        switch(work){
+            case 0:
+                apiURL = "https://the-dune-api.herokuapp.com/quotes/5";
+                break;
+            case 1:
+                apiURL = "https://breaking-bad-quotes.herokuapp.com/v1/quotes/5";
+            case 2:
+                apiURL = "https://game-of-thrones-quotes.herokuapp.com/v1/random/5";
+                break;
+        }
+
+        Log.d("Fetch", apiURL);
 
         //Make connection to API
         URL requestURL = new URL(apiURL);
@@ -59,20 +74,91 @@ public class FetchQuotes extends AsyncTask<String, Void, String> {
     @Override
     protected String doInBackground(String... strings) {
         Log.d("FetQuoteTag","Inside Fetchquote thread");
-        String jsonString = null;
+        ArrayList<String> jsonStrings = new ArrayList<String>();
         //method that connects to API throws an exception
         //must use try catch block to call it
         Log.d("FetchQuotes", "Attempt Read");
         try {
-            jsonString = getQuoteInfo();
+            for(int i = 0; i < mWorksUsed.length; i++) {
+                jsonStrings.add("");
+                if(mWorksUsed[i])
+                    jsonStrings.set(i, getQuoteInfo(i));
+                else
+                    jsonStrings.set(i, null);
+                switch(i){
+                    case 0:
+                        dune(jsonStrings.get(i));
+                        break;
+                    case 1:
+                        breakingBad(jsonStrings.get(i));
+                    case 2:
+                        gameOfThronesQuotes(jsonStrings.get(i));
+                        break;
+                }
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        Log.d("FetchQuotes", jsonString);
+        return "";
 
-        String s = jsonString;
+    }
 
+    @Override
+    protected void onPostExecute(String s) {
+
+        super.onPostExecute(s);
+
+    }
+
+    private void dune(String s){
+        if(s == null) return;
+        JSONArray itemsArray = null;
+        try {
+            //convert jsonString to jsonObject
+            itemsArray = new JSONArray(s);
+            //loop through array until you find an author and title
+            Log.d("FetchQuotes", "Entering Loop");
+            for (int i=0;i < itemsArray.length(); i++) {
+                // Get a json object from array
+                JSONObject quoteObj = itemsArray.getJSONObject(i);
+                //get quoteInfo key
+                String quote = quoteObj.getString("quote");
+                mQuotesText.get().add(quote);
+                Log.d("FetchQuotes", quote);
+            }
+
+        } catch (Exception e) {
+            mQuotesText.get().add("No results");
+            e.printStackTrace();
+        }
+    }
+
+    private void breakingBad(String s){
+        if(s == null) return;
+        JSONArray itemsArray = null;
+        try {
+            //convert jsonString to jsonObject
+            itemsArray = new JSONArray(s);
+            //loop through array until you find an author and title
+            Log.d("FetchQuotes", "Entering Loop");
+            for (int i=0;i < itemsArray.length(); i++) {
+                // Get a json object from array
+                JSONObject quoteObj = itemsArray.getJSONObject(i);
+                //get quoteInfo key
+                String quote = quoteObj.getString("quote");
+                mQuotesText.get().add(quote);
+                Log.d("FetchQuotes", quote);
+            }
+
+        } catch (Exception e) {
+            mQuotesText.get().add("No results");
+            e.printStackTrace();
+        }
+    }
+
+    private void gameOfThronesQuotes(String s){
+        if(s == null) return;
         JSONArray itemsArray = null;
         try {
             //convert jsonString to jsonObject
@@ -92,15 +178,6 @@ public class FetchQuotes extends AsyncTask<String, Void, String> {
             mQuotesText.get().add("No results");
             e.printStackTrace();
         }
-
-        return jsonString;
-
     }
 
-    @Override
-    protected void onPostExecute(String s) {
-
-        super.onPostExecute(s);
-
-    }
 }
