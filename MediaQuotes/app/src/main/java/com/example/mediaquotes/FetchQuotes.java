@@ -42,6 +42,7 @@ public class FetchQuotes extends AsyncTask<String, Void, String> {
                 break;
             case 1:
                 apiURL = "https://breaking-bad-quotes.herokuapp.com/v1/quotes/5";
+                break;
             case 2:
                 apiURL = "https://game-of-thrones-quotes.herokuapp.com/v1/random/5";
                 break;
@@ -91,6 +92,7 @@ public class FetchQuotes extends AsyncTask<String, Void, String> {
                         break;
                     case 1:
                         breakingBad(jsonStrings.get(i));
+                        break;
                     case 2:
                         gameOfThronesQuotes(jsonStrings.get(i));
                         break;

@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -36,23 +37,31 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick (View v) {
+        CheckBox check = (CheckBox) v;
         switch(v.getId()) {
             case R.id.dune:
-                Toast.makeText(this, "Dune is Selected", Toast.LENGTH_SHORT).show();
-                mBooksSelected[0] = true;
+                if(check.isChecked())
+                    Toast.makeText(this, "Dune is Selected", Toast.LENGTH_SHORT).show();
+                mBooksSelected[0] = check.isChecked();
                 break;
             case R.id.breakingbad:
-                Toast.makeText(this, "Breaking is Selected", Toast.LENGTH_SHORT).show();
-                mBooksSelected[1] = true;
+                if(check.isChecked())
+                    Toast.makeText(this, "Breaking is Selected", Toast.LENGTH_SHORT).show();
+                mBooksSelected[1] = check.isChecked();
                 break;
             case R.id.got:
-                Toast.makeText(this, "Game of Thrones is Selected", Toast.LENGTH_SHORT).show();
-                mBooksSelected[2] = true;
+                if(check.isChecked())
+                    Toast.makeText(this, "Game of Thrones is Selected", Toast.LENGTH_SHORT).show();
+                mBooksSelected[2] = check.isChecked();
                 break;
         }
     }
 
     public void processInput(View view) throws InterruptedException, ExecutionException {
+        if(!mBooksSelected[0] && !mBooksSelected[1] && !mBooksSelected[2]){
+            Toast.makeText(this, "Must select at least 1 source of quotes", Toast.LENGTH_LONG).show();
+            return;
+        }
         Intent intent = new Intent(this, OutputActivity.class);
         FetchQuotes fetch = new FetchQuotes(mQuotesText, mBooksSelected);
         fetch.execute().get();

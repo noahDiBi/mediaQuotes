@@ -5,8 +5,6 @@
     <string name="media">Please select the books/series you want to search:</string>
     <string name="breaking_bad">Breaking Bad</string>
     <string name="game_of_thrones">Game of Thrones</string>
-    <string name="better_call_saul">Better Call Saul</string>
-    <string name="lucifer">Lucifer</string>
     <string name="inputWord">Input</string>
     <string name="word_phrase">Please input a word/phrase you want to look for:</string>
     <string name="search_button">Search</string>

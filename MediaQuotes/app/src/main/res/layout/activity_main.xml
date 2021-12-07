@@ -27,25 +27,22 @@
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
-            <RadioButton
+            <CheckBox
                 android:id="@+id/dune"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
                 android:text="@string/dune" />
 
-            <RadioButton
+            <CheckBox
                 android:id="@+id/breakingbad"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
                 android:text="@string/breaking_bad" />
 
-            <RadioButton
+            <CheckBox
                 android:id="@+id/got"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
                 android:text="@string/game_of_thrones" />
 
             <TextView
@@ -73,6 +70,7 @@
                 android:layout_height="wrap_content"
                 android:onClick="processInput"
                 android:text="@string/search_button" />
+
         </LinearLayout>
     </ScrollView>
 
