@@ -69,7 +69,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             return;
         }
         Intent intent = new Intent(this, OutputActivity.class);
-        FetchQuotes fetch = new FetchQuotes(mQuotesText, mBooksSelected);
+        FetchQuotes fetch = new FetchQuotes(mQuotesText, mBooksSelected, mWordInput);
         fetch.execute().get();
         intent.putExtra("key", mQuotesText);
         startActivity(intent);

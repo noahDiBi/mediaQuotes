@@ -18,15 +18,19 @@ import java.lang.ref.WeakReference;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
+import java.util.Locale;
 
 public class FetchQuotes extends AsyncTask<String, Void, String> {
     private WeakReference<LinkedList<String>> mQuotesText;
     private boolean[] mWorksUsed;
+    private String mInput;
 
-    FetchQuotes(LinkedList<String> quotesText, boolean[] works) {
+    FetchQuotes(LinkedList<String> quotesText, boolean[] works, String word) {
         mQuotesText = new WeakReference<LinkedList<String>>(quotesText);
         mWorksUsed = works;
+        mInput = word;
     }
 
     public LinkedList<String> getContents(){
@@ -38,13 +42,13 @@ public class FetchQuotes extends AsyncTask<String, Void, String> {
         String apiURL = new String();
         switch(work){
             case 0:
-                apiURL = "https://the-dune-api.herokuapp.com/quotes/";
+                apiURL = "https://the-dune-api.herokuapp.com/quotes/342";
                 break;
             case 1:
-                apiURL = "https://breaking-bad-quotes.herokuapp.com/v1/quotes/5";
+                apiURL = "https://breaking-bad-quotes.herokuapp.com/v1/quotes/78";
                 break;
             case 2:
-                apiURL = "https://game-of-thrones-quotes.herokuapp.com/v1/random/5";
+                apiURL = "https://game-of-thrones-quotes.herokuapp.com/v1/random/144";
                 break;
         }
 
@@ -126,7 +130,9 @@ public class FetchQuotes extends AsyncTask<String, Void, String> {
                 JSONObject quoteObj = itemsArray.getJSONObject(i);
                 //get quoteInfo key
                 String quote = quoteObj.getString("quote");
-                mQuotesText.get().add(quote);
+                boolean hasWord = Arrays.asList(quote.toLowerCase(Locale.ROOT).replaceAll("\\p{Punct}", "").split(" ")).contains(mInput.toLowerCase(Locale.ROOT));;
+                if (hasWord)
+                    mQuotesText.get().add(quote);
                 Log.d("FetchQuotes", quote);
             }
 
@@ -149,7 +155,9 @@ public class FetchQuotes extends AsyncTask<String, Void, String> {
                 JSONObject quoteObj = itemsArray.getJSONObject(i);
                 //get quoteInfo key
                 String quote = quoteObj.getString("quote");
-                mQuotesText.get().add(quote);
+                boolean hasWord = Arrays.asList(quote.toLowerCase(Locale.ROOT).replaceAll("\\p{Punct}", "").split(" ")).contains(mInput.toLowerCase(Locale.ROOT));;
+                if (hasWord)
+                    mQuotesText.get().add(quote);
                 Log.d("FetchQuotes", quote);
             }
 
@@ -172,7 +180,9 @@ public class FetchQuotes extends AsyncTask<String, Void, String> {
                 JSONObject quoteObj = itemsArray.getJSONObject(i);
                 //get quoteInfo key
                 String quote = quoteObj.getString("sentence");
-                mQuotesText.get().add(quote);
+                boolean hasWord = Arrays.asList(quote.toLowerCase(Locale.ROOT).replaceAll("\\p{Punct}", "").split(" ")).contains(mInput.toLowerCase(Locale.ROOT));;
+                if (hasWord)
+                    mQuotesText.get().add(quote);
                 Log.d("FetchQuotes", quote);
             }
 
