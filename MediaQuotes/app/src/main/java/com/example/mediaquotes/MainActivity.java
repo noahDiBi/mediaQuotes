@@ -18,13 +18,17 @@ import java.util.concurrent.ExecutionException;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private LinkedList<String> mQuotesText;
     private boolean[] mBooksSelected;
+    private String mWordInput;
+    EditText inputField;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         mQuotesText = new LinkedList<String>();
         mBooksSelected = new boolean[3];
+        inputField = (EditText) findViewById(R.id.inputField);
 
         Button dune = findViewById(R.id.dune);
         Button bb = findViewById(R.id.breakingbad);
@@ -46,7 +50,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.breakingbad:
                 if(check.isChecked())
-                    Toast.makeText(this, "Breaking is Selected", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Breaking Bad is Selected", Toast.LENGTH_SHORT).show();
                 mBooksSelected[1] = check.isChecked();
                 break;
             case R.id.got:
@@ -58,6 +62,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void processInput(View view) throws InterruptedException, ExecutionException {
+        String mWordInput = inputField.getEditableText().toString();
+        Log.d("The input is:", mWordInput);
         if(!mBooksSelected[0] && !mBooksSelected[1] && !mBooksSelected[2]){
             Toast.makeText(this, "Must select at least 1 source of quotes", Toast.LENGTH_LONG).show();
             return;

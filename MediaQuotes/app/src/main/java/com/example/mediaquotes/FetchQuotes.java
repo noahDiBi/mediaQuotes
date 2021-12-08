@@ -38,7 +38,7 @@ public class FetchQuotes extends AsyncTask<String, Void, String> {
         String apiURL = new String();
         switch(work){
             case 0:
-                apiURL = "https://the-dune-api.herokuapp.com/quotes/5";
+                apiURL = "https://the-dune-api.herokuapp.com/quotes/";
                 break;
             case 1:
                 apiURL = "https://breaking-bad-quotes.herokuapp.com/v1/quotes/5";
