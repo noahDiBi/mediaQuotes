@@ -123,17 +123,7 @@ public class FetchQuotes extends AsyncTask<String, Void, String> {
                 JSONObject quoteObj = itemsArray.getJSONObject(i);
                 //get quoteInfo key
                 String quote = quoteObj.getString("quote");
-                if (mInput.contains(" ") == false) {
-                    boolean hasWord = Arrays.asList(quote.toLowerCase(Locale.ROOT).replaceAll("\\p{Punct}", "").split(" ")).contains(mInput.toLowerCase(Locale.ROOT));
-                    ;
-                    if (hasWord)
-                        mQuotesText.get().add(quote);
-                    Log.d("FetchQuotes", quote);
-                } else {
-                    boolean hasPhrase = quote.toLowerCase(Locale.ROOT).indexOf(mInput.toLowerCase(Locale.ROOT)) > -1;
-                    if (hasPhrase)
-                        mQuotesText.get().add(quote);
-                }
+                checkWordPhrase (mInput, quote);
             }
 
         } catch (Exception e) {
@@ -155,17 +145,7 @@ public class FetchQuotes extends AsyncTask<String, Void, String> {
                 JSONObject quoteObj = itemsArray.getJSONObject(i);
                 //get quoteInfo key
                 String quote = quoteObj.getString("quote");
-                if (mInput.contains(" ") == false) {
-                    boolean hasWord = Arrays.asList(quote.toLowerCase(Locale.ROOT).replaceAll("\\p{Punct}", "").split(" ")).contains(mInput.toLowerCase(Locale.ROOT));
-                    ;
-                    if (hasWord)
-                        mQuotesText.get().add(quote);
-                    Log.d("FetchQuotes", quote);
-                } else {
-                    boolean hasPhrase = quote.toLowerCase(Locale.ROOT).indexOf(mInput.toLowerCase(Locale.ROOT)) > -1;
-                    if (hasPhrase)
-                        mQuotesText.get().add(quote);
-                }
+                checkWordPhrase (mInput, quote);
             }
 
         } catch (Exception e) {
@@ -187,22 +167,25 @@ public class FetchQuotes extends AsyncTask<String, Void, String> {
                 JSONObject quoteObj = itemsArray.getJSONObject(i);
                 //get quoteInfo key
                 String quote = quoteObj.getString("sentence");
-                if (mInput.contains(" ") == false) {
-                    boolean hasWord = Arrays.asList(quote.toLowerCase(Locale.ROOT).replaceAll("\\p{Punct}", "").split(" ")).contains(mInput.toLowerCase(Locale.ROOT));
-                    ;
-                    if (hasWord)
-                        mQuotesText.get().add(quote);
-                    Log.d("FetchQuotes", quote);
-                } else {
-                    boolean hasPhrase = quote.toLowerCase(Locale.ROOT).indexOf(mInput.toLowerCase(Locale.ROOT)) > -1;
-                    if (hasPhrase)
-                        mQuotesText.get().add(quote);
-                }
+                checkWordPhrase (mInput, quote);
             }
 
         } catch (Exception e) {
             mQuotesText.get().add("No results");
             e.printStackTrace();
+        }
+    }
+
+    private void checkWordPhrase (String input, String quote) {
+        if (input.contains(" ") == false) {
+            boolean hasWord = Arrays.asList(quote.toLowerCase(Locale.ROOT).replaceAll("\\p{Punct}", "").split(" ")).contains(input.toLowerCase(Locale.ROOT));
+            if (hasWord)
+                mQuotesText.get().add(quote);
+            Log.d("FetchQuotes", quote);
+        } else {
+            boolean hasPhrase = quote.toLowerCase(Locale.ROOT).indexOf(input.toLowerCase(Locale.ROOT)) > -1;
+            if (hasPhrase)
+                mQuotesText.get().add(quote);
         }
     }
 }
