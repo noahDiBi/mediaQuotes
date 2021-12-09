@@ -23,6 +23,7 @@ import java.util.LinkedList;
 import java.util.Locale;
 
 public class FetchQuotes extends AsyncTask<String, Void, String> {
+    //References to the 3 lists used in output
     private WeakReference<LinkedList<String>> mQuotesText;
     private WeakReference<LinkedList<String>> mCharacters;
     private WeakReference<LinkedList<String>> mMedia;
@@ -30,6 +31,7 @@ public class FetchQuotes extends AsyncTask<String, Void, String> {
     private String mInput;
 
     FetchQuotes(LinkedList<String> quotesText, LinkedList<String> names, LinkedList<String> media, boolean[] works, String word) {
+        //Initialize the references
         mQuotesText = new WeakReference<LinkedList<String>>(quotesText);
         mCharacters = new WeakReference<LinkedList<String>>(names);
         mMedia = new WeakReference<LinkedList<String>>(media);
@@ -37,10 +39,7 @@ public class FetchQuotes extends AsyncTask<String, Void, String> {
         mInput = word;
     }
 
-    public LinkedList<String> getContents(){
-        return mQuotesText.get();
-    }
-
+    //Get the JSON string depending on the media chosen
     protected String getQuoteInfo(int work) throws IOException {
         //Google Books API URL
         String apiURL = new String();
@@ -82,9 +81,7 @@ public class FetchQuotes extends AsyncTask<String, Void, String> {
     protected String doInBackground(String... strings) {
         Log.d("FetQuoteTag","Inside Fetchquote thread");
         ArrayList<String> jsonStrings = new ArrayList<String>();
-        //method that connects to API throws an exception
-        //must use try catch block to call it
-        Log.d("FetchQuotes", "Attempt Read");
+        //Try to read the quotes
         try {
             for(int i = 0; i < mWorksUsed.length; i++) {
                 jsonStrings.add("");
@@ -104,8 +101,12 @@ public class FetchQuotes extends AsyncTask<String, Void, String> {
                         break;
                 }
             }
-            if(mQuotesText.get().isEmpty())
+            //If 0 results were found
+            if(mQuotesText.get().isEmpty()) {
                 mQuotesText.get().add("No results found.");
+                mCharacters.get().add("N/A");
+                mMedia.get().add("N/A");
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -125,14 +126,13 @@ public class FetchQuotes extends AsyncTask<String, Void, String> {
         if(s == null) return;
         JSONArray itemsArray = null;
         try {
-            //convert jsonString to jsonObject
+            //Get array of quotes from string
             itemsArray = new JSONArray(s);
             //loop through array until you find an author and title
-            Log.d("FetchQuotes", "Entering Loop");
             for (int i=0;i < itemsArray.length(); i++) {
                 // Get a json object from array
                 JSONObject quoteObj = itemsArray.getJSONObject(i);
-                //get quoteInfo key
+                //get quote, add if matched
                 String quote = quoteObj.getString("quote");
                 if(checkWordPhrase (mInput, quote)){
                     mQuotesText.get().add(quote);
@@ -153,14 +153,12 @@ public class FetchQuotes extends AsyncTask<String, Void, String> {
         if(s == null) return;
         JSONArray itemsArray = null;
         try {
-            //convert jsonString to jsonObject
+            //Get array of quotes from string
             itemsArray = new JSONArray(s);
-            //loop through array until you find an author and title
-            Log.d("FetchQuotes", "Entering Loop");
             for (int i=0;i < itemsArray.length(); i++) {
                 // Get a json object from array
                 JSONObject quoteObj = itemsArray.getJSONObject(i);
-                //get quoteInfo key
+                //Get quote and add if matched
                 String quote = quoteObj.getString("quote");
                 String author = quoteObj.getString("author");
                 if(checkWordPhrase (mInput, quote)){
@@ -182,17 +180,16 @@ public class FetchQuotes extends AsyncTask<String, Void, String> {
         if(s == null) return;
         JSONArray itemsArray = null;
         try {
-            //convert jsonString to jsonObject
+            //Get array of quotes from string
             itemsArray = new JSONArray(s);
-            //loop through array until you find an author and title
-            Log.d("FetchQuotes", "Entering Loop");
             for (int i=0;i < itemsArray.length(); i++) {
                 // Get a json object from array
                 JSONObject quoteObj = itemsArray.getJSONObject(i);
-                //get quoteInfo key
+                //Add quote if matched
                 String quote = quoteObj.getString("sentence");
                 if(checkWordPhrase (mInput, quote)){
                     mQuotesText.get().add(quote);
+                    //Speaker of the quote is in another JSONObject
                     JSONObject speaker = quoteObj.getJSONObject("character");
                     mCharacters.get().add(speaker.getString("name"));
                     mMedia.get().add("Game of Thrones");
@@ -207,7 +204,10 @@ public class FetchQuotes extends AsyncTask<String, Void, String> {
         }
     }
 
+    //Checks if a quote matches with the input given by the user
     private boolean checkWordPhrase (String input, String quote) {
+        if(input.equals(""))
+            return true;
         if (input.contains(" ") == false) {
             boolean hasWord = Arrays.asList(quote.toLowerCase(Locale.ROOT).replaceAll("\\p{Punct}", "").split(" ")).contains(input.toLowerCase(Locale.ROOT));
             if (hasWord)

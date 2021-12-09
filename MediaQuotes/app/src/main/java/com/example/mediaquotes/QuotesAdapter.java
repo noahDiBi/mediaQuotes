@@ -23,7 +23,7 @@ public class QuotesAdapter extends RecyclerView.Adapter<QuotesAdapter.QuotesHold
 
     public QuotesAdapter(Context context,
                            LinkedList<String> quoteList, LinkedList<String> names, LinkedList<String> media) {
-        //use this to create the layout
+        //use this to create the layout and link the 3 lists
         mInflater = LayoutInflater.from(context);
         mQuotes = quoteList;
         mNames = names;
@@ -38,6 +38,7 @@ public class QuotesAdapter extends RecyclerView.Adapter<QuotesAdapter.QuotesHold
         return new QuotesHolder(mItemView, this);
     }
 
+    //Set all of the text in quote_item
     @Override
     public void onBindViewHolder(@NonNull QuotesHolder holder, int position) {
         String mCurrent = mQuotes.get(position);
@@ -55,6 +56,7 @@ public class QuotesAdapter extends RecyclerView.Adapter<QuotesAdapter.QuotesHold
 
     class QuotesHolder extends RecyclerView.ViewHolder{
 
+        //Holder for quote_item
         private TextView mQuoteView;
         private TextView mNameView;
         private TextView mMediaView;
@@ -62,6 +64,7 @@ public class QuotesAdapter extends RecyclerView.Adapter<QuotesAdapter.QuotesHold
 
         public QuotesHolder(@NonNull View itemView, QuotesAdapter adapter) {
             super(itemView);
+            //Get each text view from quote_item
             mQuoteView = itemView.findViewById(R.id.quoteView);
             mNameView = itemView.findViewById(R.id.characterView);
             mMediaView = itemView.findViewById(R.id.mediaView);

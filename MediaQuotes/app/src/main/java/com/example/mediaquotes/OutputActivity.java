@@ -12,6 +12,7 @@ import java.util.LinkedList;
 
 public class OutputActivity extends AppCompatActivity {
 
+    //Lists, recyclers and adapters
     private RecyclerView mRecyclerView;
     private QuotesAdapter mAdapter;
     private LinkedList<String> mQuoteList = new LinkedList<>();
