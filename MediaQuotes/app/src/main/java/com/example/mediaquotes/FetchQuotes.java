@@ -166,7 +166,7 @@ public class FetchQuotes extends AsyncTask<String, Void, String> {
                 if(checkWordPhrase (mInput, quote)){
                     mQuotesText.get().add(quote);
                     mCharacters.get().add(author);
-                    mMedia.get().add("Breaking Bad/Better Call Saul");
+                    mMedia.get().add("Breaking Bad");
                 }
             }
 
