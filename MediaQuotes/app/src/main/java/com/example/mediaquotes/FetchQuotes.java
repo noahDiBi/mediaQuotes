@@ -1,15 +1,8 @@
 package com.example.mediaquotes;
-
-import android.content.Context;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
-import android.widget.TextView;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
-
-import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -130,10 +123,17 @@ public class FetchQuotes extends AsyncTask<String, Void, String> {
                 JSONObject quoteObj = itemsArray.getJSONObject(i);
                 //get quoteInfo key
                 String quote = quoteObj.getString("quote");
-                boolean hasWord = Arrays.asList(quote.toLowerCase(Locale.ROOT).replaceAll("\\p{Punct}", "").split(" ")).contains(mInput.toLowerCase(Locale.ROOT));;
-                if (hasWord)
-                    mQuotesText.get().add(quote);
-                Log.d("FetchQuotes", quote);
+                if (mInput.contains(" ") == false) {
+                    boolean hasWord = Arrays.asList(quote.toLowerCase(Locale.ROOT).replaceAll("\\p{Punct}", "").split(" ")).contains(mInput.toLowerCase(Locale.ROOT));
+                    ;
+                    if (hasWord)
+                        mQuotesText.get().add(quote);
+                    Log.d("FetchQuotes", quote);
+                } else {
+                    boolean hasPhrase = quote.toLowerCase(Locale.ROOT).indexOf(mInput.toLowerCase(Locale.ROOT)) > -1;
+                    if (hasPhrase)
+                        mQuotesText.get().add(quote);
+                }
             }
 
         } catch (Exception e) {
@@ -155,10 +155,17 @@ public class FetchQuotes extends AsyncTask<String, Void, String> {
                 JSONObject quoteObj = itemsArray.getJSONObject(i);
                 //get quoteInfo key
                 String quote = quoteObj.getString("quote");
-                boolean hasWord = Arrays.asList(quote.toLowerCase(Locale.ROOT).replaceAll("\\p{Punct}", "").split(" ")).contains(mInput.toLowerCase(Locale.ROOT));;
-                if (hasWord)
-                    mQuotesText.get().add(quote);
-                Log.d("FetchQuotes", quote);
+                if (mInput.contains(" ") == false) {
+                    boolean hasWord = Arrays.asList(quote.toLowerCase(Locale.ROOT).replaceAll("\\p{Punct}", "").split(" ")).contains(mInput.toLowerCase(Locale.ROOT));
+                    ;
+                    if (hasWord)
+                        mQuotesText.get().add(quote);
+                    Log.d("FetchQuotes", quote);
+                } else {
+                    boolean hasPhrase = quote.toLowerCase(Locale.ROOT).indexOf(mInput.toLowerCase(Locale.ROOT)) > -1;
+                    if (hasPhrase)
+                        mQuotesText.get().add(quote);
+                }
             }
 
         } catch (Exception e) {
@@ -180,10 +187,17 @@ public class FetchQuotes extends AsyncTask<String, Void, String> {
                 JSONObject quoteObj = itemsArray.getJSONObject(i);
                 //get quoteInfo key
                 String quote = quoteObj.getString("sentence");
-                boolean hasWord = Arrays.asList(quote.toLowerCase(Locale.ROOT).replaceAll("\\p{Punct}", "").split(" ")).contains(mInput.toLowerCase(Locale.ROOT));;
-                if (hasWord)
-                    mQuotesText.get().add(quote);
-                Log.d("FetchQuotes", quote);
+                if (mInput.contains(" ") == false) {
+                    boolean hasWord = Arrays.asList(quote.toLowerCase(Locale.ROOT).replaceAll("\\p{Punct}", "").split(" ")).contains(mInput.toLowerCase(Locale.ROOT));
+                    ;
+                    if (hasWord)
+                        mQuotesText.get().add(quote);
+                    Log.d("FetchQuotes", quote);
+                } else {
+                    boolean hasPhrase = quote.toLowerCase(Locale.ROOT).indexOf(mInput.toLowerCase(Locale.ROOT)) > -1;
+                    if (hasPhrase)
+                        mQuotesText.get().add(quote);
+                }
             }
 
         } catch (Exception e) {
@@ -191,5 +205,4 @@ public class FetchQuotes extends AsyncTask<String, Void, String> {
             e.printStackTrace();
         }
     }
-
 }
