@@ -1,5 +1,7 @@
 package com.example.mediaquotes;
+
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -7,14 +9,17 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
+
 import java.util.LinkedList;
 import java.util.concurrent.ExecutionException;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private LinkedList<String> mQuotesText;
+    private LinkedList<String> mCharacters;
+    private LinkedList<String> mMediaList;
     private boolean[] mBooksSelected;
-    private String mWordInput;
     EditText inputField;
 
     @Override
@@ -23,6 +28,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
 
         mQuotesText = new LinkedList<String>();
+        mCharacters = new LinkedList<String>();
+        mMediaList = new LinkedList<String>();
         mBooksSelected = new boolean[3];
         inputField = (EditText) findViewById(R.id.inputField);
 
@@ -65,9 +72,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             return;
         }
         Intent intent = new Intent(this, OutputActivity.class);
-        FetchQuotes fetch = new FetchQuotes(mQuotesText, mBooksSelected, mWordInput);
+        FetchQuotes fetch = new FetchQuotes(mQuotesText, mCharacters, mMediaList, mBooksSelected, mWordInput);
         fetch.execute().get();
-        intent.putExtra("key", mQuotesText);
+        intent.putExtra("quotes", mQuotesText);
+        intent.putExtra("names", mCharacters);
+        intent.putExtra("media", mMediaList);
         startActivity(intent);
     }
 }

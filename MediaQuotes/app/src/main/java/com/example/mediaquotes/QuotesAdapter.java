@@ -1,24 +1,33 @@
 package com.example.mediaquotes;
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import org.w3c.dom.Text;
+
 import java.util.LinkedList;
 
 public class QuotesAdapter extends RecyclerView.Adapter<QuotesAdapter.QuotesHolder>{
 
     private LayoutInflater mInflater;
     private LinkedList<String> mQuotes;
+    private LinkedList<String> mNames;
+    private LinkedList<String> mMedia;
     private Context context;
 
     public QuotesAdapter(Context context,
-                           LinkedList<String> quoteList) {
+                           LinkedList<String> quoteList, LinkedList<String> names, LinkedList<String> media) {
         //use this to create the layout
         mInflater = LayoutInflater.from(context);
         mQuotes = quoteList;
+        mNames = names;
+        mMedia = media;
         this.context = context;
     }
 
@@ -33,6 +42,10 @@ public class QuotesAdapter extends RecyclerView.Adapter<QuotesAdapter.QuotesHold
     public void onBindViewHolder(@NonNull QuotesHolder holder, int position) {
         String mCurrent = mQuotes.get(position);
         holder.mQuoteView.setText(mCurrent);
+        mCurrent = mNames.get(position);
+        holder.mNameView.setText("Spoken by: " + mCurrent);
+        mCurrent = mMedia.get(position);
+        holder.mMediaView.setText("Said in: " + mCurrent);
     }
 
     @Override
@@ -43,11 +56,15 @@ public class QuotesAdapter extends RecyclerView.Adapter<QuotesAdapter.QuotesHold
     class QuotesHolder extends RecyclerView.ViewHolder{
 
         private TextView mQuoteView;
+        private TextView mNameView;
+        private TextView mMediaView;
         private QuotesAdapter mAdapter;
 
         public QuotesHolder(@NonNull View itemView, QuotesAdapter adapter) {
             super(itemView);
             mQuoteView = itemView.findViewById(R.id.quoteView);
+            mNameView = itemView.findViewById(R.id.characterView);
+            mMediaView = itemView.findViewById(R.id.mediaView);
             mAdapter = adapter;
         }
     }

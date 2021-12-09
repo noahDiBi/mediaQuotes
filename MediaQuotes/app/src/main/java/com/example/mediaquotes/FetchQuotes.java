@@ -1,8 +1,15 @@
 package com.example.mediaquotes;
+
+import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.TextView;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
+
+import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -17,11 +24,15 @@ import java.util.Locale;
 
 public class FetchQuotes extends AsyncTask<String, Void, String> {
     private WeakReference<LinkedList<String>> mQuotesText;
+    private WeakReference<LinkedList<String>> mCharacters;
+    private WeakReference<LinkedList<String>> mMedia;
     private boolean[] mWorksUsed;
     private String mInput;
 
-    FetchQuotes(LinkedList<String> quotesText, boolean[] works, String word) {
+    FetchQuotes(LinkedList<String> quotesText, LinkedList<String> names, LinkedList<String> media, boolean[] works, String word) {
         mQuotesText = new WeakReference<LinkedList<String>>(quotesText);
+        mCharacters = new WeakReference<LinkedList<String>>(names);
+        mMedia = new WeakReference<LinkedList<String>>(media);
         mWorksUsed = works;
         mInput = word;
     }
@@ -33,7 +44,7 @@ public class FetchQuotes extends AsyncTask<String, Void, String> {
     protected String getQuoteInfo(int work) throws IOException {
         //Google Books API URL
         String apiURL = new String();
-        switch(work){
+        switch(work) {
             case 0:
                 apiURL = "https://the-dune-api.herokuapp.com/quotes/342";
                 break;
@@ -44,8 +55,6 @@ public class FetchQuotes extends AsyncTask<String, Void, String> {
                 apiURL = "https://game-of-thrones-quotes.herokuapp.com/v1/random/144";
                 break;
         }
-
-        Log.d("Fetch", apiURL);
 
         //Make connection to API
         URL requestURL = new URL(apiURL);
@@ -95,6 +104,8 @@ public class FetchQuotes extends AsyncTask<String, Void, String> {
                         break;
                 }
             }
+            if(mQuotesText.get().isEmpty())
+                mQuotesText.get().add("No results found.");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -123,11 +134,17 @@ public class FetchQuotes extends AsyncTask<String, Void, String> {
                 JSONObject quoteObj = itemsArray.getJSONObject(i);
                 //get quoteInfo key
                 String quote = quoteObj.getString("quote");
-                checkWordPhrase (mInput, quote);
+                if(checkWordPhrase (mInput, quote)){
+                    mQuotesText.get().add(quote);
+                    mCharacters.get().add("Not Given");
+                    mMedia.get().add("Dune");
+                }
             }
 
         } catch (Exception e) {
             mQuotesText.get().add("No results");
+            mCharacters.get().add("N/A");
+            mMedia.get().add("N/A");
             e.printStackTrace();
         }
     }
@@ -145,11 +162,18 @@ public class FetchQuotes extends AsyncTask<String, Void, String> {
                 JSONObject quoteObj = itemsArray.getJSONObject(i);
                 //get quoteInfo key
                 String quote = quoteObj.getString("quote");
-                checkWordPhrase (mInput, quote);
+                String author = quoteObj.getString("author");
+                if(checkWordPhrase (mInput, quote)){
+                    mQuotesText.get().add(quote);
+                    mCharacters.get().add(author);
+                    mMedia.get().add("Breaking Bad/Better Call Saul");
+                }
             }
 
         } catch (Exception e) {
             mQuotesText.get().add("No results");
+            mCharacters.get().add("N/A");
+            mMedia.get().add("N/A");
             e.printStackTrace();
         }
     }
@@ -167,25 +191,33 @@ public class FetchQuotes extends AsyncTask<String, Void, String> {
                 JSONObject quoteObj = itemsArray.getJSONObject(i);
                 //get quoteInfo key
                 String quote = quoteObj.getString("sentence");
-                checkWordPhrase (mInput, quote);
+                if(checkWordPhrase (mInput, quote)){
+                    mQuotesText.get().add(quote);
+                    JSONObject speaker = quoteObj.getJSONObject("character");
+                    mCharacters.get().add(speaker.getString("name"));
+                    mMedia.get().add("Game of Thrones");
+                }
             }
 
         } catch (Exception e) {
             mQuotesText.get().add("No results");
+            mCharacters.get().add("N/A");
+            mMedia.get().add("N/A");
             e.printStackTrace();
         }
     }
 
-    private void checkWordPhrase (String input, String quote) {
+    private boolean checkWordPhrase (String input, String quote) {
         if (input.contains(" ") == false) {
             boolean hasWord = Arrays.asList(quote.toLowerCase(Locale.ROOT).replaceAll("\\p{Punct}", "").split(" ")).contains(input.toLowerCase(Locale.ROOT));
             if (hasWord)
-                mQuotesText.get().add(quote);
-            Log.d("FetchQuotes", quote);
+                return true;
         } else {
             boolean hasPhrase = quote.toLowerCase(Locale.ROOT).indexOf(input.toLowerCase(Locale.ROOT)) > -1;
             if (hasPhrase)
-                mQuotesText.get().add(quote);
+                return true;
         }
+        return false;
     }
+
 }
